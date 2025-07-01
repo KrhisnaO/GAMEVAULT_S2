@@ -1,27 +1,50 @@
 # Gamevault
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
+GameVault es una aplicación web desarrollada con Angular que permite explorar, gestionar y comprar juegos de mesa por categoría. Incluye funcionalidades tanto para usuarios como para administradores, como carrito de compras, edición de productos y administración de usuarios.
 
-## Development server
+## 🚀 Tecnologías
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Angular CLI v16.2.16
+- TypeScript
+- Bootstrap (para estilos)
+- LocalStorage (persistencia local)
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🧩 Funcionalidades
 
-## Build
+### Usuario
+- Navegación por categorías: Estrategia, Familiares, Infantiles, Cartas.
+- Visualización de juegos con precio, imagen, descripción y detalles técnicos.
+- Sistema de carrito de compras (con persistencia por sesión).
+- Detalle individual de cada juego.
+- Registro, inicio de sesión y compra simulada.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Administrador
+- Agregar o eliminar juegos.
+- Agregar o eliminar usuarios.
+- Edición de juegos en línea (nombre, precio, descripción, oferta, etc).
+- Panel de administración con formularios dinámicos.
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 📦 Instalación y ejecución
 
-## Running end-to-end tests
+### 1. Clona el repositorio
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+git clone https://github.com/KrhisnaO/GAMEVAULT_S2.git
+cd gamevault
+```
 
-## Further help
+### 2. Instala las dependencias
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm install
+```
+
+
+### 3. Ejecuta el servidor
+
+```bash
+ng serve
