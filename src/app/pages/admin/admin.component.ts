@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -11,56 +10,70 @@ export class AdminComponent implements OnInit {
 
   tipo: string = '';
   juegos: any[] = [];
+  usuarios: any[] = [];
   sesion: any = null;
+
+  // Formulario nuevo juego
+  nuevoJuego = {
+    nombre: '',
+    categoria: '',
+    precio: 0,
+    descripcion: '',
+    edad: '',
+    jugadores: '',
+    duracion: '',
+    mecanicas: '',
+  };
+
+
+  // Formulario nuevo usuario
+  nuevoUsuario = {
+    nombre: '',
+    usuario: '',
+    email: '',
+    password: '',
+    tipo: 'usuario'
+  };
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Obtener sesión
     const sesionStr = localStorage.getItem('sesion');
     this.sesion = sesionStr ? JSON.parse(sesionStr) : null;
 
-    // Suscribirse a cambios de parámetros en la URL
-    this.route.paramMap.subscribe(params => {
-      const tipoParam = params.get('tipo');
-      this.tipo = tipoParam ?? '';
+    const juegosGuardados = JSON.parse(localStorage.getItem('juegos') || '[]');
+    this.juegos = juegosGuardados;
 
-      // Obtener todos los juegos
-      const juegosGuardados = JSON.parse(localStorage.getItem('juegos') || '[]');
-
-      // Filtrar por categoría
-      this.juegos = juegosGuardados.filter((j: any) =>
-        j?.categoria?.toLowerCase() === this.tipo.toLowerCase()
-      );
-    });
+    const usuariosGuardados = JSON.parse(localStorage.getItem('usuarios') || '[]');
+    this.usuarios = usuariosGuardados;
   }
 
-  editar(juego: any): void {
-    if (!this.sesion || this.sesion.tipo !== 'admin') return;
+  // Juegos
+  agregarJuego(): void {
+    if (!this.nuevoJuego.nombre || !this.nuevoJuego.categoria || this.nuevoJuego.precio <= 0) return;
 
-    const nuevoNombre = prompt('Nuevo nombre:', juego.nombre);
-    const nuevaDescripcion = prompt('Nueva descripción:', juego.descripcion);
-    const nuevoPrecio = prompt('Nuevo precio:', juego.precio);
-    const enOferta = confirm('¿Está en oferta?');
+    this.juegos.push({ ...this.nuevoJuego });
+    localStorage.setItem('juegos', JSON.stringify(this.juegos));
+    this.nuevoJuego = { nombre: '', categoria: '', precio: 0, descripcion: '', edad: '', jugadores: '', duracion: '', mecanicas: ''  };
+  }
 
-    const juegos = JSON.parse(localStorage.getItem('juegos') || '[]');
-    const index = juegos.findIndex((j: any) =>
-      j.nombre === juego.nombre && j.categoria.toLowerCase() === this.tipo.toLowerCase()
-    );
+  eliminarJuego(index: number): void {
+    this.juegos.splice(index, 1);
+    localStorage.setItem('juegos', JSON.stringify(this.juegos));
+  }
 
-    if (index !== -1) {
-      juegos[index] = {
-        ...juegos[index],
-        nombre: nuevoNombre?.trim() || juego.nombre,
-        descripcion: nuevaDescripcion?.trim() || juego.descripcion,
-        precio: parseFloat(nuevoPrecio || juego.precio),
-        oferta: enOferta
-      };
-      localStorage.setItem('juegos', JSON.stringify(juegos));
-      this.juegos = juegos.filter((j: any) =>
-        j.categoria.toLowerCase() === this.tipo.toLowerCase()
-      );
-    }
+  // Usuarios
+  agregarUsuario(): void {
+    if (!this.nuevoUsuario.nombre || !this.nuevoUsuario.usuario || !this.nuevoUsuario.email || !this.nuevoUsuario.password) return;
+
+    this.usuarios.push({ ...this.nuevoUsuario });
+    localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
+    this.nuevoUsuario = { nombre: '', usuario: '', email: '', password: '', tipo: 'usuario' };
+  }
+
+  eliminarUsuario(index: number): void {
+    this.usuarios.splice(index, 1);
+    localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
   }
 
 }

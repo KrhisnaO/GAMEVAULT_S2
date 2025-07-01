@@ -67,8 +67,8 @@ export class CategoriasComponent implements OnInit {
       return;
     }
 
-    const claveCarrito = 'carrito_' + this.sesion.email;
-    const carrito = JSON.parse(localStorage.getItem(claveCarrito) || '[]');
+    const cCarrito = 'carrito_' + this.sesion.email;
+    const carrito = JSON.parse(localStorage.getItem(cCarrito) || '[]');
 
     const index = carrito.findIndex((j: any) => j.nombre === juego.nombre);
 
@@ -78,7 +78,7 @@ export class CategoriasComponent implements OnInit {
       carrito.push({ ...juego, cantidad: 1 });
     }
 
-    localStorage.setItem(claveCarrito, JSON.stringify(carrito));
+    localStorage.setItem(cCarrito, JSON.stringify(carrito));
     alert('¡Agregado al carrito!');
   }
 
